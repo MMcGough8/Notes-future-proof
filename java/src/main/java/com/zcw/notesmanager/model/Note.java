@@ -1,10 +1,10 @@
-package main.java.com.zcw.notesmanager.model;
+package com.zcw.notesmanager.model;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Notes {
+public class Note {
     private String id;
     private String title;
     private LocalDateTime created;
@@ -15,7 +15,7 @@ public class Notes {
     private String status;
     private Integer priority;
 
-    public Notes(String id, String title, LocalDateTime created, 
+    public Note(String id, String title, LocalDateTime created, 
                 LocalDateTime modified, String content) {
         this.id = id;
         this.title = title;
@@ -25,7 +25,7 @@ public class Notes {
         this.tags = new ArrayList<>();
     }
 
-    // Getters and Setters
+  
     public String getId() { return id; }
     public void setId(String id) { this.id = id; }
 
