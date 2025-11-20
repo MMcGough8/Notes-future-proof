@@ -69,16 +69,6 @@ class YamlServiceTest {
     }
 
     @Test
-    void testParseYamlWithNullInput() {
-
-        YamlService yamlService = new YamlService();
-    
-        assertThrows(IllegalArgumentException.class, () -> {
-            yamlService.parseYaml(null);
-        });
-    }
-
-    @Test
     void testParseYamlWithEmptyString() {
   
         YamlService yamlService = new YamlService();
@@ -99,5 +89,14 @@ class YamlServiceTest {
         assertThrows(RuntimeException.class, () -> {
             yamlService.parseYaml(invalidYaml);
         });
+    }
+
+    @Test
+    void testParseYamlWithNullInput() {
+        YamlService yamlService = new YamlService();
+
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> yamlService.parseYaml(null));
+
+        assertEquals("YAML content cannot be null", exception.getMessage());
     }
 }

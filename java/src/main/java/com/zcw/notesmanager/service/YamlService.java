@@ -15,6 +15,14 @@ public class YamlService {
         if (yamlContent == null) {
             throw new IllegalArgumentException("YAML content cannot be null");
         }
-        return yaml.load(yamlContent);
+        if (yamlContent.trim().isEmpty()) {
+            return null;
+        }
+        try {
+            return yaml.load(yamlContent);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to parse YAML: " + e.getMessage(), e);
+        }
     }
 }
+
