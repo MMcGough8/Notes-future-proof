@@ -12,6 +12,9 @@ public class YamlService {
     }
     
     public Map<String, Object> parseYaml(String yamlContent) {
+        if (yamlContent == null) {
+            throw new IllegalArgumentException("YAML content cannot be null");
+        }
         return yaml.load(yamlContent);
     }
 }

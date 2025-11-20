@@ -67,4 +67,37 @@ class YamlServiceTest {
         assertEquals("in-progress", result.get("status"));
         assertEquals(5, result.get("priority"));
     }
+
+    @Test
+    void testParseYamlWithNullInput() {
+
+        YamlService yamlService = new YamlService();
+    
+        assertThrows(IllegalArgumentException.class, () -> {
+            yamlService.parseYaml(null);
+        });
+    }
+
+    @Test
+    void testParseYamlWithEmptyString() {
+  
+        YamlService yamlService = new YamlService();
+    
+   
+        Map<String, Object> result = yamlService.parseYaml("");
+    
+    
+        assertNull(result);
+    }
+
+    @Test
+    void testParseYamlWithInvalidSyntax() {
+    
+        String invalidYaml = "title: Broken\n  this is: not valid YAML: at all";
+        YamlService yamlService = new YamlService();
+    
+        assertThrows(RuntimeException.class, () -> {
+            yamlService.parseYaml(invalidYaml);
+        });
+    }
 }
