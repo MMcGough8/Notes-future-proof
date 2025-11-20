@@ -24,5 +24,15 @@ public class YamlService {
             throw new RuntimeException("Failed to parse YAML: " + e.getMessage(), e);
         }
     }
+
+    public String writeYaml(Map<String, Object> data){
+        if (data == null){
+            throw new IllegalArgumentException("Data cannot be null");
+        }
+        if(data.isEmpty()){
+            return "";
+        }
+        return yaml.dump(data);
+    }
 }
 
