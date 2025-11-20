@@ -2,8 +2,10 @@ package com.zcw.notesmanager.service;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -98,5 +100,22 @@ class YamlServiceTest {
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> yamlService.parseYaml(null));
 
         assertEquals("YAML content cannot be null", exception.getMessage());
+    }
+
+    @Test
+    void testWriteSimpleYamlHeader() {
+        YamlService yamlService = new YamlService();
+    
+        Map<String, Object> noteData = new HashMap<>();
+        noteData.put("title", "My Test Note");
+        noteData.put("created", "2025-11-18T10:30:00Z");
+        noteData.put("modified", "2025-11-18T10:45:00Z");
+    
+    
+        String yaml = yamlService.writeYaml(noteData);
+        assertNotNull(yaml);
+        assertTrue(yaml.contains("title: My Test Note"));
+        assertTrue(yaml.contains("created: 2025-11-18T10:30:00Z"));
+        assertTrue(yaml.contains("modified: 2025-11-18T10:45:00Z"));
     }
 }

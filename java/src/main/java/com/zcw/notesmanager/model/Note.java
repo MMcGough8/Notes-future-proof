@@ -1,27 +1,36 @@
 package com.zcw.notesmanager.model;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Note {
     private String id;
     private String title;
-    private LocalDateTime created;
-    private LocalDateTime modified;
+    private Instant created;
+    private Instant modified;
     private String content;
     private List<String> tags;
     private String author;
     private String status;
     private Integer priority;
 
-    public Note(String id, String title, LocalDateTime created, 
-                LocalDateTime modified, String content) {
+    public Note(String id, String title, Instant created, 
+                Instant modified, String content) {
         this.id = id;
         this.title = title;
         this.created = created;
         this.modified = modified;
         this.content = content;
+        this.tags = new ArrayList<>();
+    }
+
+     public Note(String id, String title, String content) {
+        this.id = id;
+        this.title = title;
+        this.content = content;
+        this.created = Instant.now();
+        this.modified = Instant.now();
         this.tags = new ArrayList<>();
     }
 
@@ -32,11 +41,11 @@ public class Note {
     public String getTitle() { return title; }
     public void setTitle(String title) { this.title = title; }
 
-    public LocalDateTime getCreated() { return created; }
-    public void setCreated(LocalDateTime created) { this.created = created; }
+    public Instant getCreated() { return created; }
+    public void setCreated(Instant created) { this.created = created; }
 
-    public LocalDateTime getModified() { return modified; }
-    public void setModified(LocalDateTime modified) { this.modified = modified; }
+    public Instant getModified() { return modified; }
+    public void setModified(Instant modified) { this.modified = modified; }
 
     public String getContent() { return content; }
     public void setContent(String content) { this.content = content; }
