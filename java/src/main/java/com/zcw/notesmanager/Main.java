@@ -2,6 +2,7 @@ package com.zcw.notesmanager;
 
 import com.zcw.notesmanager.cli.CommandParser;
 import com.zcw.notesmanager.cli.commands.CreateCommand;
+import com.zcw.notesmanager.cli.commands.ListCommand;
 import com.zcw.notesmanager.service.NoteService;
 
 import java.nio.file.Files;
@@ -39,7 +40,7 @@ public class Main {
                     break;
                 }
 
-                String[] commandArgs = input.split("\\s+", 2); // ← important fix!
+                String[] commandArgs = input.split("\\s+", 2);
                 String commandName = commandArgs[0].toLowerCase();
 
                 if ("help".equals(commandName)) {
@@ -57,7 +58,6 @@ public class Main {
         } catch (Exception e) {
             System.err.println("Fatal error: " + e.getMessage());
             e.printStackTrace();
-        } finally {
         }
     }
 
@@ -71,6 +71,10 @@ public class Main {
         switch (commandName) {
             case "create":
                 new CreateCommand(noteService, scanner).execute();
+                break;
+                
+            case "list":
+                new ListCommand(noteService).execute();
                 break;
 
             case "help":
