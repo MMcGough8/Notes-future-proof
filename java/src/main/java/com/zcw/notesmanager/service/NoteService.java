@@ -39,10 +39,28 @@ public class NoteService {
         if (note.getPriority() != null) noteData.put("priority", note.getPriority());
 
         String yamlFrontMatter = yamlService.writeYaml(noteData);
-        Path noteFile = notesDirectory.resolve(note.getId() + ".note");
+        
+        String sanitizedTitle = sanitizeTitle(note.getTitle());
+        String filename = sanitizedTitle + "-" + note.getId() + ".note";
+        Path noteFile = notesDirectory.resolve(filename);
 
         fileService.writeNote(noteFile, yamlFrontMatter, note.getContent());
     }
 
-    
+    private String sanitizeTitle(String title) {
+        if (title == null || title.isEmpty()) {
+            return "untitled";
+        }
+        
+        String sanitized = title.toLowerCase()
+            .replaceAll("[^a-z0-9]+", "-")  // Replace special chars with hyphen
+            .replaceAll("^-+|-+$", "");     // Remove leading/trailing hyphens
+        
+        // Limit length to keep filenames reasonable
+        if (sanitized.length() > 30) {
+            sanitized = sanitized.substring(0, 30).replaceAll("-+$", "");
+        }
+        
+        return sanitized.isEmpty() ? "untitled" : sanitized;
+    }
 }
