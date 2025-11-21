@@ -1,6 +1,7 @@
 package com.zcw.notesmanager.service;
 import com.zcw.notesmanager.model.Note;
 import org.junit.jupiter.api.Test;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -89,25 +90,31 @@ class YamlServiceTest {
             assertEquals("YAML content cannot be null", exception.getMessage());
     }
 
-    @Test
-    void testWriteSimpleYamlHeader() {
-        YamlService yamlService = new YamlService();
+@Test
+void testWriteYamlWithTags() {
     
-        Map<String, Object> noteData = new HashMap<>();
-            noteData.put("title", "My Test Note");
-            noteData.put("created", "2025-11-18T10:30:00Z");
-            noteData.put("modified", "2025-11-18T10:45:00Z");
-
-        String yaml = yamlService.writeYaml(noteData);
-            System.out.println("=== ACTUAL YAML OUTPUT ===");
-            System.out.println(yaml);
-            System.out.println("=== END YAML OUTPUT ===");
-
-            assertNotNull(yaml);
-            assertTrue(yaml.contains("title: My Test Note"));
-            assertTrue(yaml.contains("created: 2025-11-18T10:30:00Z"));
-            assertTrue(yaml.contains("modified: 2025-11-18T10:45:00Z"));
-    }
+    YamlService yamlService = new YamlService();
+    
+    Map<String, Object> noteData = new HashMap<>();
+    noteData.put("title", "Test Note");
+    noteData.put("tags", Arrays.asList("java", "testing", "tdd"));
+    
+    
+    String yaml = yamlService.writeYaml(noteData);
+ 
+    Map<String, Object> parsed = yamlService.parseYaml(yaml);
+    
+    assertEquals("Test Note", parsed.get("title"));
+    assertNotNull(parsed.get("tags"));
+    assertTrue(parsed.get("tags") instanceof List);
+    
+    @SuppressWarnings("unchecked")
+    List<String> tags = (List<String>) parsed.get("tags");
+    assertEquals(3, tags.size());
+    assertTrue(tags.contains("java"));
+    assertTrue(tags.contains("testing"));
+    assertTrue(tags.contains("tdd"));
+}
 
     @Test
     void testInstantToStringFormat() {
