@@ -28,15 +28,12 @@ public class Main {
             NoteService noteService = new NoteService(notesDir);
             Scanner scanner = new Scanner(System.in);
             
-            switch (parsed.getCommand()) {
-                case "create":
-                    CreateCommand createCommand = new CreateCommand(noteService, scanner);
-                    createCommand.execute();
-                    break;
-                    
-                default:
-                    System.out.println("Unknown command: " + parsed.getCommand());
-                    System.out.println("Available commands: create");
+            if ("create".equals(parsed.getCommand())) {
+                CreateCommand createCommand = new CreateCommand(noteService, scanner);
+                createCommand.execute();
+            } else {
+                System.out.println("Unknown command: " + parsed.getCommand());
+                System.out.println("Available commands: create");
             }
             
         } catch (Exception e) {
