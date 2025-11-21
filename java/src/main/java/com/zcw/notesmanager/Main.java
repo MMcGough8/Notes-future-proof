@@ -10,35 +10,75 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        if (args.length == 0) {
-            System.out.println("Usage: notes <command> [options]");
-            System.out.println("Try 'notes --help' for more information.");
-            return;
-        }
-
         try {
             Path notesDir = Path.of("notes");
             if (!Files.exists(notesDir)) {
                 Files.createDirectories(notesDir);
             }
-            
-            CommandParser parser = new CommandParser();
-            CommandParser.ParsedCommand parsed = parser.parse(args);
-            
             NoteService noteService = new NoteService(notesDir);
             Scanner scanner = new Scanner(System.in);
+            CommandParser parser = new CommandParser();
             
-            if ("create".equals(parsed.getCommand())) {
-                CreateCommand createCommand = new CreateCommand(noteService, scanner);
-                createCommand.execute();
-            } else {
-                System.out.println("Unknown command: " + parsed.getCommand());
-                System.out.println("Available commands: create");
+            if (args.length > 0) {
+                executeCommand(args, parser, noteService, scanner);
+                return;
+            }     
+            System.out.println("Personal Notes Manager");
+            System.out.println("Type 'help' for commands or 'exit' to quit\n");
+            
+            while (true) {
+                System.out.print("> ");
+                String input = scanner.nextLine().trim();
+                
+                if (input.isEmpty()) {
+                    continue;
+                }
+                
+                if (input.equalsIgnoreCase("exit") || input.equalsIgnoreCase("quit")) {
+                    System.out.println("Goodbye!");
+                    break;
+                }
+                
+                String[] commandArgs = input.split("\\s+");
+                
+                try {
+                    executeCommand(commandArgs, parser, noteService, scanner);
+                } catch (Exception e) {
+                    System.err.println("Error: " + e.getMessage());
+                    System.out.println("Type 'help' for usage information\n");
+                }
             }
             
         } catch (Exception e) {
-            System.err.println("Error: " + e.getMessage());
+            System.err.println("Fatal error: " + e.getMessage());
             e.printStackTrace();
         }
+    }
+    
+    private static void executeCommand(String[] args, CommandParser parser, NoteService noteService, Scanner scanner) {
+        CommandParser.ParsedCommand parsed = parser.parse(args);
+        
+        switch (parsed.getCommand()) {
+            case "create":
+                CreateCommand createCommand = new CreateCommand(noteService, scanner);
+                createCommand.execute();
+                break;
+                
+            case "help":
+                showHelp();
+                break;
+                
+            default:
+                System.out.println("Unknown command: " + parsed.getCommand());
+                System.out.println("Type 'help' for available commands");
+        }
+    }
+    
+    private static void showHelp() {
+        System.out.println("\nAvailable commands:");
+        System.out.println("  create          - Create a new note");
+        System.out.println("  help            - Show this help message");
+        System.out.println("  exit            - Exit the program");
+        System.out.println();
     }
 }

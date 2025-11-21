@@ -23,10 +23,10 @@ public class CreateCommand {
             
             if (title.isEmpty()) {
                 System.out.println("Error: Title cannot be empty");
-                return;
+                return; 
             }
             
-            System.out.println("Enter note content (press Ctrl+D or Ctrl+Z when done):");
+            System.out.println("Enter note content (press Ctrl+D when done):");
             StringBuilder contentBuilder = new StringBuilder();
             
             while (scanner.hasNextLine()) {
@@ -41,9 +41,12 @@ public class CreateCommand {
             System.out.println("\n✓ Note created successfully!");
             System.out.println("ID: " + note.getId());
             System.out.println("Title: " + note.getTitle());
+            System.out.println();
             
         } catch (IOException e) {
             System.err.println("Error creating note: " + e.getMessage());
+        } catch (Exception e) {
+            System.err.println("Unexpected error: " + e.getMessage());
         }
     }
 }
