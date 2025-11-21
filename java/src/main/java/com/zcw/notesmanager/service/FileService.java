@@ -34,4 +34,47 @@ public class FileService {
         
         return new String[] { yamlHeader, content };
     }
+
+    public void writeNote(Path filePath, String yamlHeader, String content) throws IOException {
+    if (filePath == null) {
+        throw new IllegalArgumentException("File path cannot be null");
+    }
+    
+    if (yamlHeader == null) {
+        throw new IllegalArgumentException("YAML header cannot be null");
+    }
+    
+    StringBuilder noteContent = new StringBuilder();
+    noteContent.append("---\n");
+    noteContent.append(yamlHeader);
+    noteContent.append("\n---\n\n");
+    noteContent.append(content != null ? content : "");
+    
+    Files.writeString(filePath, noteContent.toString());
+}
+
+    public void updateNote(Path filePath, String yamlHeader, String content) throws IOException {
+    if (filePath == null) {
+        throw new IllegalArgumentException("File path cannot be null");
+    }
+    
+    if (!Files.exists(filePath)) {
+        throw new IOException("Cannot update: file does not exist: " + filePath);
+    }
+
+    writeNote(filePath, yamlHeader, content);
+}
+
+public void deleteNote(Path filePath) throws IOException {
+    if (filePath == null) {
+        throw new IllegalArgumentException("File path cannot be null");
+    }
+    
+    if (!Files.exists(filePath)) {
+        throw new IOException("Cannot delete: file does not exist: " + filePath);
+    }
+    
+    Files.delete(filePath);
+}
+
 }
