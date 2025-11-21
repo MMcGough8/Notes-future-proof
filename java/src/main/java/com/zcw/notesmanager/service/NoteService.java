@@ -53,10 +53,9 @@ public class NoteService {
         }
         
         String sanitized = title.toLowerCase()
-            .replaceAll("[^a-z0-9]+", "-")  // Replace special chars with hyphen
-            .replaceAll("^-+|-+$", "");     // Remove leading/trailing hyphens
+            .replaceAll("[^a-z0-9]+", "-")
+            .replaceAll("^-+|-+$", "");
         
-        // Limit length to keep filenames reasonable
         if (sanitized.length() > 30) {
             sanitized = sanitized.substring(0, 30).replaceAll("-+$", "");
         }
