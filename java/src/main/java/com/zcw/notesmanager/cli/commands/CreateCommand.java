@@ -26,15 +26,25 @@ public class CreateCommand {
                 return; 
             }
             
-            System.out.println("Enter note content (press Ctrl+D when done):");
+            System.out.println("Enter note content (type 'END' on a new line when done):");
             StringBuilder contentBuilder = new StringBuilder();
             
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
-                contentBuilder.append(line).append("\n");
+                if (line.trim().equals("END")) {
+                    break;
+                }
+                if (contentBuilder.length() > 0) {
+                    contentBuilder.append("\n");
+                }
+                contentBuilder.append(line);
             }
             
             String content = contentBuilder.toString().trim();
+            
+            if (content.isEmpty()) {
+                System.out.println("Warning: Note created with empty content");
+            }
             
             Note note = noteService.createNote(title, content);
             
@@ -47,6 +57,7 @@ public class CreateCommand {
             System.err.println("Error creating note: " + e.getMessage());
         } catch (Exception e) {
             System.err.println("Unexpected error: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 }

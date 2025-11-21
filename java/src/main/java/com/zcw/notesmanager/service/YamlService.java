@@ -2,6 +2,7 @@ package com.zcw.notesmanager.service;
 
 import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.Yaml;
+import org.yaml.snakeyaml.error.YAMLException;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -9,28 +10,39 @@ import java.util.Map;
 public class YamlService {
 
     private final Yaml yaml;
+    private static final int MAX_YAML_SIZE = 100000;
 
     public YamlService() {
         DumperOptions options = new DumperOptions();
         options.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
         options.setPrettyFlow(true);
         options.setIndent(2);
+        options.setWidth(80);
+        
         this.yaml = new Yaml(options);
     }
 
     public Map<String, Object> parseYaml(String yamlContent) {
-        if (yamlContent == null) {
-            throw new IllegalArgumentException("YAML content cannot be null");
+
+        if (yamlContent == null || yamlContent.trim().isEmpty()) {
+            return new LinkedHashMap<>();
         }
-        if (yamlContent.trim().isEmpty()) {
-            return null;
+        
+        if (yamlContent.length() > MAX_YAML_SIZE) {
+            throw new IllegalArgumentException(
+                String.format("YAML content too large: %d bytes (max: %d bytes)", 
+                    yamlContent.length(), MAX_YAML_SIZE)
+            );
         }
+        
         try {
             @SuppressWarnings("unchecked")
             Map<String, Object> result = yaml.load(yamlContent);
+            
             return result != null ? result : new LinkedHashMap<>();
-        } catch (Exception e) {
-            throw new RuntimeException("Failed to parse YAML: " + e.getMessage(), e);
+            
+        } catch (YAMLException e) {
+            throw new YAMLException("Failed to parse YAML: " + e.getMessage(), e);
         }
     }
 
@@ -38,21 +50,24 @@ public class YamlService {
         if (data == null) {
             throw new IllegalArgumentException("Data cannot be null");
         }
+
         if (data.isEmpty()) {
             return "";
         }
-
-        String dumped = yaml.dump(data);
-
-        if (dumped.startsWith("---\n")) {
-            dumped = dumped.substring(4);
-        } else if (dumped.startsWith("---")) {
-            dumped = dumped.substring(3);
+        
+        try {
+            String dumped = yaml.dump(data);
+            
+            if (dumped.startsWith("---\n")) {
+                return dumped.substring(4);
+            } else if (dumped.startsWith("---")) {
+                return dumped.substring(3);
+            }
+            
+            return dumped;
+            
+        } catch (YAMLException e) {
+            throw new YAMLException("Failed to write YAML: " + e.getMessage(), e);
         }
-
-        return dumped;
-    }
-    public Map<String, Object> readYaml(String yamlContent) {
-        return yaml.load(yamlContent);
     }
 }
