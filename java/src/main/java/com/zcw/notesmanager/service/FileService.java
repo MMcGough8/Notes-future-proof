@@ -28,7 +28,7 @@ public class FileService {
         }
 
         String yamlHeader = parts[1].trim();
-        String content = parts[2].stripLeading(); // remove leading newlines/tabs nicely
+        String content = parts[2].stripLeading();
 
         return new String[] { yamlHeader, content };
     }
