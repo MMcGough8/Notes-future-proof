@@ -1,44 +1,41 @@
 package com.zcw.notesmanager.util;
 
-import java.time.Instant;
-import java.time.ZoneOffset;
-import java.time.format.DateTimeFormatter;
-import java.util.UUID;
+import java.util.HexFormat;
+import java.util.Random;
+
 
 public class IdGenerator {
-    
-    private static final DateTimeFormatter DATE_FORMATTER = 
-        DateTimeFormatter.ofPattern("yyyyMMdd-HHmmss").withZone(ZoneOffset.UTC);
-    
-    private static final int MAX_TITLE_LENGTH = 50;
-    
-    public String generateId() {
-        String timestamp = DATE_FORMATTER.format(Instant.now());
-        String randomPart = UUID.randomUUID().toString().substring(0, 8);
-        return timestamp + "-" + randomPart;
-    }
-    
-    public String generateId(String title) {
-        String timestamp = DATE_FORMATTER.format(Instant.now());
-        String sanitized = sanitizeTitle(title);
 
-        if (sanitized.length() > MAX_TITLE_LENGTH) {
-            sanitized = sanitized.substring(0, MAX_TITLE_LENGTH);
+    private static final char[] CHARS = "abcdefghijklmnopqrstuvwxyz0123456789".toCharArray();
+    private static final int ID_LENGTH = 8;
+    private static final Random random = new Random();
+
+    public String generateId() {
+        char[] result = new char[ID_LENGTH];
+        for (int i = 0; i < ID_LENGTH; i++) {
+            result[i] = CHARS[random.nextInt(CHARS.length)];
         }
-        
-        return timestamp + "-" + sanitized;
+        return new String(result);
     }
-    
-    public String sanitizeTitle(String title) {
-    if (title == null || title.trim().isEmpty()) {
-        return "note";
+
+    public String generateId(String titleHint) {
+        if (titleHint != null && !titleHint.isBlank()) {
+            String clean = titleHint.toLowerCase()
+                    .replaceAll("[^a-z0-9]+", "")
+                    .replaceAll("^(.{0,4}).*", "$1");
+
+            if (!clean.isEmpty()) {
+                return clean + generateRandomSuffix(4);
+            }
+        }
+        return generateId();
     }
-    
-    return title.toLowerCase()
-                .replaceAll("[^a-z0-9\\s]", " ")
-                .trim()
-                .replaceAll("\\s+", "-")
-                .replaceAll("-+", "-")
-                .replaceAll("^-|-$", "");
+
+    private String generateRandomSuffix(int length) {
+        char[] suffix = new char[length];
+        for (int i = 0; i < length; i++) {
+            suffix[i] = CHARS[random.nextInt(CHARS.length)];
+        }
+        return new String(suffix);
     }
 }
