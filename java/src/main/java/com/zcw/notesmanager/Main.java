@@ -3,6 +3,7 @@ package com.zcw.notesmanager;
 import com.zcw.notesmanager.cli.CommandParser;
 import com.zcw.notesmanager.cli.commands.CreateCommand;
 import com.zcw.notesmanager.cli.commands.ListCommand;
+import com.zcw.notesmanager.cli.commands.ReadCommand;
 import com.zcw.notesmanager.service.NoteService;
 
 import java.nio.file.Files;
@@ -76,6 +77,16 @@ public class Main {
             case "list":
                 new ListCommand(noteService).execute();
                 break;
+                
+            case "read":
+            case "view":
+                if (remainingArgs.length == 0) {
+                    System.err.println("Error: Note ID is required");
+                    System.out.println("Usage: read <note-id>\n");
+                } else {
+                    new ReadCommand(noteService, remainingArgs[0]).execute();
+                }
+                break;
 
             case "help":
                 showHelp();
@@ -91,7 +102,7 @@ public class Main {
         System.out.println("\nAvailable commands:");
         System.out.println("  create            Create a new note");
         System.out.println("  list              List all notes");
-        System.out.println("  view <id>         View a note");
+        System.out.println("  read <id>         View a note (or 'view')");
         System.out.println("  edit <id>         Edit a note");
         System.out.println("  delete <id>       Delete a note");
         System.out.println("  help              Show this help message");
