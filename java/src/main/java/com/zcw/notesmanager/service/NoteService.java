@@ -131,4 +131,45 @@ private Note loadNoteFromFile(Path noteFile) throws IOException {
     
     return note;
     }
+
+    public void deleteNote(String noteId) throws IOException {
+    try (DirectoryStream<Path> stream = Files.newDirectoryStream(notesDirectory, "*.note")) {
+        for (Path noteFile : stream) {
+            String filename = noteFile.getFileName().toString();
+            if (filename.contains(noteId)) {
+                fileService.deleteNote(noteFile);
+                return;
+            }
+        }
+    }
+    
+    throw new IOException("Note not found with ID: " + noteId);
+}
+
+public void updateNote(String noteId, String newTitle, String newContent) throws IOException {
+    Path noteFile = null;
+    try (DirectoryStream<Path> stream = Files.newDirectoryStream(notesDirectory, "*.note")) {
+        for (Path file : stream) {
+            String filename = file.getFileName().toString();
+            if (filename.contains(noteId)) {
+                noteFile = file;
+                break;
+            }
+        }
+    }
+    
+    if (noteFile == null) {
+        throw new IOException("Note not found with ID: " + noteId);
+    }
+    
+    Note existingNote = loadNoteFromFile(noteFile);
+    
+    existingNote.setTitle(newTitle);
+    existingNote.setContent(newContent);
+    existingNote.setModified(java.time.Instant.now());
+    
+    fileService.deleteNote(noteFile);
+
+    saveNote(existingNote);
+}
 }

@@ -4,6 +4,8 @@ import com.zcw.notesmanager.cli.CommandParser;
 import com.zcw.notesmanager.cli.commands.CreateCommand;
 import com.zcw.notesmanager.cli.commands.ListCommand;
 import com.zcw.notesmanager.cli.commands.ReadCommand;
+import com.zcw.notesmanager.cli.commands.DeleteCommand;
+import com.zcw.notesmanager.cli.commands.EditCommand;
 import com.zcw.notesmanager.service.NoteService;
 
 import java.nio.file.Files;
@@ -87,6 +89,26 @@ public class Main {
                     new ReadCommand(noteService, remainingArgs[0]).execute();
                 }
                 break;
+                
+            case "edit":
+            case "update":
+                if (remainingArgs.length == 0) {
+                    System.err.println("Error: Note ID is required");
+                    System.out.println("Usage: edit <note-id>\n");
+                } else {
+                    new EditCommand(noteService, remainingArgs[0], scanner).execute();
+                }
+                break;
+                
+            case "delete":
+            case "remove":
+                if (remainingArgs.length == 0) {
+                    System.err.println("Error: Note ID is required");
+                    System.out.println("Usage: delete <note-id>\n");
+                } else {
+                    new DeleteCommand(noteService, remainingArgs[0], scanner).execute();
+                }
+                break;
 
             case "help":
                 showHelp();
@@ -103,8 +125,8 @@ public class Main {
         System.out.println("  create            Create a new note");
         System.out.println("  list              List all notes");
         System.out.println("  read <id>         View a note (or 'view')");
-        System.out.println("  edit <id>         Edit a note");
-        System.out.println("  delete <id>       Delete a note");
+        System.out.println("  edit <id>         Edit a note (or 'update')");
+        System.out.println("  delete <id>       Delete a note (or 'remove')");
         System.out.println("  help              Show this help message");
         System.out.println("  exit              Quit the app\n");
     }
