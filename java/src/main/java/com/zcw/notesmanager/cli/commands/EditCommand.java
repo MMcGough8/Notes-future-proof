@@ -28,22 +28,18 @@ public class EditCommand {
         }
         
         try {
-            // Load existing note
             Note note = noteService.readNote(noteId);
             
             System.out.println("\n=== Editing Note ===");
             System.out.println("ID: " + note.getId());
             System.out.println();
             
-            // Edit title
             System.out.println("Current title: " + note.getTitle());
             System.out.print("New title (press Enter to keep current): ");
             String newTitle = scanner.nextLine().trim();
             if (newTitle.isEmpty()) {
                 newTitle = note.getTitle();
             }
-            
-            // Edit content
             System.out.println("\nCurrent content:");
             System.out.println("───────────────────────────────────────");
             System.out.println(note.getContent());
@@ -72,7 +68,6 @@ public class EditCommand {
                 System.out.println("Invalid choice. Keeping current content.");
             }
             
-            // Edit tags
             System.out.print("\nCurrent tags: ");
             if (note.getTags() != null && !note.getTags().isEmpty()) {
                 System.out.println(String.join(", ", note.getTags()));
@@ -94,7 +89,6 @@ public class EditCommand {
                 }
             }
             
-            // Edit priority
             System.out.print("\nCurrent priority: ");
             if (note.getPriority() != null) {
                 System.out.println(note.getPriority());
@@ -118,7 +112,6 @@ public class EditCommand {
                 }
             }
             
-            // Update the note
             noteService.updateNote(noteId, newTitle, newContent, newTags, newPriority);
             
             System.out.println("\n✓ Note updated successfully!");

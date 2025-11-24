@@ -48,7 +48,6 @@ public class CreateCommand {
                 System.out.println("Warning: Note created with empty content");
             }
             
-            // Add tags
             System.out.print("Add tags (comma-separated, or press Enter to skip): ");
             String tagsInput = scanner.nextLine().trim();
             List<String> tags = new ArrayList<>();
@@ -63,7 +62,6 @@ public class CreateCommand {
                 }
             }
             
-            // Add priority
             Integer priority = null;
             System.out.print("Set priority (1-5, or press Enter to skip): ");
             String priorityInput = scanner.nextLine().trim();
