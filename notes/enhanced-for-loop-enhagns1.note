@@ -1,0 +1,12 @@
+---
+created: '2025-11-24T04:24:16.511936Z'
+modified: '2025-11-24T04:24:16.517284Z'
+title: Enhanced For Loop
+priority: 3
+tags:
+- java
+- loops
+- iteration
+---
+
+For-each loop simplifies iteration: for(Type item : collection) { }. Works with arrays and collections. Cannot modify collection while iterating. More readable than traditional for. Example: for(String name : names) { System.out.println(name); }. Use when you don't need index.

@@ -1,0 +1,12 @@
+---
+created: '2025-11-24T04:24:12.720319Z'
+modified: '2025-11-24T04:24:12.728395Z'
+title: HashMap Collection
+priority: 3
+tags:
+- java
+- hashmap
+- collections
+---
+
+HashMap stores key-value pairs. Syntax: HashMap<String, Integer> map = new HashMap<>();. Methods: put(key, value), get(key), remove(key), containsKey(key), keySet(), values(), size(). Keys must be unique. Fast lookups O(1). Example: map.put("age", 25). Use when you need key-based access.

@@ -1,0 +1,12 @@
+---
+created: '2025-11-24T04:22:27.809520Z'
+modified: '2025-11-24T04:22:27.812745Z'
+title: Working with Java Arrays
+priority: 5
+tags:
+- java
+- arrays
+- data-structures
+---
+
+Arrays store multiple values of same type: int[] numbers = new int[5]. Fixed size after creation. Access elements with index: numbers[0]. Index starts at 0. Length property: numbers.length. Multi-dimensional: int[][] matrix = new int[3][3]. Arrays are objects in Java. Cannot change size after creation - use ArrayList for dynamic sizing.

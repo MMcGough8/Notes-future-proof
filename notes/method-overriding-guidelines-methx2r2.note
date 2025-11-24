@@ -1,0 +1,12 @@
+---
+created: '2025-11-24T04:25:04.420071Z'
+modified: '2025-11-24T04:25:04.423118Z'
+title: Method Overriding Guidelines
+priority: 2
+tags:
+- java
+- overriding
+- inheritance
+---
+
+Overriding changes parent method in subclass. Same signature required. Use @Override annotation for safety. Cannot override static or final methods. Access modifier must be same or less restrictive. Happens at runtime. Example: @Override public void draw() { }. Enables polymorphism.

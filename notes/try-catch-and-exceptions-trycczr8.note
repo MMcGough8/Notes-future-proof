@@ -1,0 +1,12 @@
+---
+created: '2025-11-24T04:23:11.158705Z'
+modified: '2025-11-24T04:23:11.164992Z'
+title: Try-Catch and Exceptions
+priority: 4
+tags:
+- java
+- exceptions
+- error-handling
+---
+
+Handle errors with try-catch blocks. Try contains risky code, catch handles exceptions. Finally block always executes. Throw exceptions with 'throw'. Declare with 'throws' in method signature. Checked exceptions must be handled, unchecked (RuntimeException) optional. Example: try { code } catch (Exception e) { handle } finally { cleanup }

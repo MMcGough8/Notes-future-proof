@@ -1,0 +1,12 @@
+---
+created: '2025-11-24T04:24:47.321053Z'
+modified: '2025-11-24T04:24:47.324432Z'
+title: Super Keyword Usage
+priority: 2
+tags:
+- java
+- super
+- inheritance
+---
+
+'super' references parent class. Access parent methods: super.method(). Call parent constructor: super(args) - must be first line. Access hidden fields: super.field. Used when child overrides parent. Example: super.eat() calls parent's eat method. Essential for inheritance hierarchies.

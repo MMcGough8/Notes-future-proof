@@ -1,0 +1,12 @@
+---
+created: '2025-11-24T04:24:57.701482Z'
+modified: '2025-11-24T04:24:57.706457Z'
+title: Method Overloading Rules
+priority: 2
+tags:
+- java
+- overloading
+- methods
+---
+
+Overloading allows multiple methods same name, different parameters. Must differ in number, type, or order of parameters. Return type alone not enough. Happens at compile-time. Example: add(int, int) and add(double, double). Improves code readability. Common with constructors.

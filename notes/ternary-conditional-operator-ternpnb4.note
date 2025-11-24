@@ -1,0 +1,12 @@
+---
+created: '2025-11-24T04:25:09.098058Z'
+modified: '2025-11-24T04:25:09.100660Z'
+title: Ternary Conditional Operator
+priority: 1
+tags:
+- java
+- operators
+- syntax
+---
+
+Ternary is shorthand if-else: condition ? valueIfTrue : valueIfFalse. Example: int max = (a > b) ? a : b. Returns value based on condition. More concise than if-else for simple cases. Can nest but reduces readability. Use for simple assignments.

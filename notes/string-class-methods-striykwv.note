@@ -1,0 +1,12 @@
+---
+created: '2025-11-24T04:23:04.350949Z'
+modified: '2025-11-24T04:23:04.354111Z'
+title: String Class Methods
+priority: 4
+tags:
+- java
+- strings
+- methods
+---
+
+Strings are immutable in Java. Common methods: length(), charAt(i), substring(start, end), indexOf(str), toLowerCase(), toUpperCase(), trim(), split(delimiter), equals(str), equalsIgnoreCase(str), concat(str), replace(old, new). Use StringBuilder for mutable strings. String pool optimizes memory. Always use .equals() not == for comparison.

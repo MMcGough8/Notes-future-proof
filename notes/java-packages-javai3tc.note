@@ -1,0 +1,12 @@
+---
+created: '2025-11-24T04:24:35.517766Z'
+modified: '2025-11-24T04:24:35.520619Z'
+title: Java Packages
+priority: 2
+tags:
+- java
+- packages
+- organization
+---
+
+Packages organize classes into namespaces. Syntax: package com.company.project; at top of file. Import classes: import java.util.ArrayList. Prevents naming conflicts. Directory structure matches package name. Default package has no name. Use reverse domain notation: com.company. Improves code organization.

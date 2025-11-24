@@ -1,0 +1,12 @@
+---
+created: '2025-11-24T04:21:21.079121Z'
+modified: '2025-11-24T04:21:21.089359Z'
+title: OOP Core Concepts
+priority: 5
+tags:
+- java
+- oop
+- fundamentals
+---
+
+Java is object-oriented with four main pillars: Encapsulation (bundling data with methods), Inheritance (extending classes with 'extends'), Polymorphism (same method different behaviors), and Abstraction (hiding complexity). Classes are blueprints, objects are instances. Everything in Java revolves around objects except primitives. Master these four concepts to understand Java architecture.

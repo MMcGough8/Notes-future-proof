@@ -5,7 +5,6 @@ import com.zcw.notesmanager.service.NoteService;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -64,11 +63,34 @@ public class CreateCommand {
                 }
             }
             
-            Note note = noteService.createNote(title, content);
+            // Add priority
+            Integer priority = null;
+            System.out.print("Set priority (1-5, or press Enter to skip): ");
+            String priorityInput = scanner.nextLine().trim();
             
-            if (!tags.isEmpty()) {
-                note.setTags(tags);
-                noteService.updateNote(note.getId(), note.getTitle(), note.getContent(), note.getTags());
+            if (!priorityInput.isEmpty()) {
+                try {
+                    int p = Integer.parseInt(priorityInput);
+                    if (p >= 1 && p <= 5) {
+                        priority = p;
+                    } else {
+                        System.out.println("Warning: Priority must be 1-5. Skipping.");
+                    }
+                } catch (NumberFormatException e) {
+                    System.out.println("Warning: Invalid priority. Skipping.");
+                }
+            }
+            
+            Note note = noteService.createNote(title, content);
+
+            if (!tags.isEmpty() || priority != null) {
+                if (!tags.isEmpty()) {
+                    note.setTags(tags);
+                }
+                if (priority != null) {
+                    note.setPriority(priority);
+                }
+                noteService.updateNote(note.getId(), note.getTitle(), note.getContent(), note.getTags(), note.getPriority());
             }
             
             System.out.println("\n✓ Note created successfully!");
@@ -76,6 +98,9 @@ public class CreateCommand {
             System.out.println("Title: " + note.getTitle());
             if (!tags.isEmpty()) {
                 System.out.println("Tags: " + String.join(", ", tags));
+            }
+            if (priority != null) {
+                System.out.println("Priority: " + priority);
             }
             System.out.println();
             

@@ -1,0 +1,12 @@
+---
+created: '2025-11-24T04:23:23.840248Z'
+modified: '2025-11-24T04:23:23.844340Z'
+title: ArrayList Collection Class
+priority: 4
+tags:
+- java
+- arraylist
+- collections
+---
+
+ArrayList is dynamic array from java.util. Syntax: ArrayList<String> list = new ArrayList<>();. Methods: add(item), get(index), remove(index), size(), clear(), contains(item). Can only store objects not primitives (use Integer not int). Automatically resizes. More flexible than arrays but slightly slower.

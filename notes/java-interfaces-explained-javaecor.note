@@ -1,0 +1,12 @@
+---
+created: '2025-11-24T04:23:46.699117Z'
+modified: '2025-11-24T04:23:46.705042Z'
+title: Java Interfaces Explained
+priority: 3
+tags:
+- java
+- interfaces
+- oop
+---
+
+Interfaces define contracts with abstract methods. Classes implement interfaces with 'implements'. Can implement multiple interfaces. All methods public abstract by default. Java 8+ allows default and static methods. Example: interface Drawable { void draw(); }. Enables polymorphism and loose coupling.

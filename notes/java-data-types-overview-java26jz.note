@@ -1,0 +1,12 @@
+---
+created: '2025-11-24T04:21:05.776411Z'
+modified: '2025-11-24T04:21:05.839259Z'
+title: Java Data Types Overview
+priority: 5
+tags:
+- java
+- fundamentals
+- data-types
+---
+
+Java has 8 primitive data types: byte, short, int, long, float, double, boolean, and char. Primitives store values directly in memory. Reference types (like String, arrays, objects) store memory addresses. Understanding the difference is crucial for memory management and performance. int is most common for integers, double for decimals. boolean is true/false only. char stores single characters in single quotes.

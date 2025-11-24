@@ -1,0 +1,12 @@
+---
+created: '2025-11-24T04:21:41.131351Z'
+modified: '2025-11-24T04:21:41.138201Z'
+title: Understanding Java Methods
+priority: 5
+tags:
+- java
+- methods
+- fundamentals
+---
+
+Methods define behavior and have four parts: access modifier (public/private), return type (void/int/String), name, and parameters. Syntax: public int add(int a, int b) { return a + b; }. Methods can be overloaded (same name, different parameters). Static methods belong to class, instance methods to objects. Method signature = name + parameters.

@@ -1,0 +1,12 @@
+---
+created: '2025-11-24T04:22:54.502887Z'
+modified: '2025-11-24T04:22:54.509681Z'
+title: Java Access Modifiers Guide
+priority: 4
+tags:
+- java
+- access-modifiers
+- encapsulation
+---
+
+Four access levels: public (accessible everywhere), private (class only), protected (package and subclasses), default/package-private (package only). Use private for fields, public for methods you want exposed. Encapsulation principle: private fields with public getters/setters. Modifiers control visibility and security.

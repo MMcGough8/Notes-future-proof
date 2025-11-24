@@ -1,0 +1,12 @@
+---
+created: '2025-11-24T04:23:52.234324Z'
+modified: '2025-11-24T04:23:52.237635Z'
+title: Abstract Classes in Java
+priority: 3
+tags:
+- java
+- abstract
+- oop
+---
+
+Abstract classes cannot be instantiated, used as base classes. Can have abstract methods (no body) and concrete methods. Subclasses must implement abstract methods. Use 'abstract' keyword. Mix of interface and regular class. Example: abstract class Animal { abstract void makeSound(); }. Use when sharing code among related classes.

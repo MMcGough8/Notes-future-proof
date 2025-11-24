@@ -1,0 +1,12 @@
+---
+created: '2025-11-24T04:24:07.380328Z'
+modified: '2025-11-24T04:24:07.384428Z'
+title: Encapsulation Best Practices
+priority: 3
+tags:
+- java
+- encapsulation
+- oop
+---
+
+Encapsulation bundles data with methods and restricts direct access. Make fields private, provide public getters/setters. Protects data integrity. Example: private int age; public int getAge() { return age; } public void setAge(int age) { if(age > 0) this.age = age; }. Core OOP principle for maintainable code.

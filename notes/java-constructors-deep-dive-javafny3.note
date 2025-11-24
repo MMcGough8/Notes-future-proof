@@ -1,0 +1,12 @@
+---
+created: '2025-11-24T04:22:38.617999Z'
+modified: '2025-11-24T04:22:38.626223Z'
+title: Java Constructors Deep Dive
+priority: 4
+tags:
+- java
+- constructors
+- oop
+---
+
+Constructors initialize objects, same name as class, no return type. Default constructor provided if none written. Can overload constructors. Use 'this' to reference current object. Constructor chaining with this() or super(). Called automatically with 'new'. Example: public Dog(String name) { this.name = name; }

@@ -4,9 +4,6 @@ import com.zcw.notesmanager.model.Note;
 import com.zcw.notesmanager.util.IdGenerator;
 
 import java.io.IOException;
-import java.util.Set;
-import java.util.HashSet;
-import java.util.Collections;
 import java.nio.file.*;
 import java.util.*;
 
@@ -66,11 +63,9 @@ public class NoteService {
         return sanitized.isEmpty() ? "untitled" : sanitized;
     }
     public Note readNote(String noteId) throws IOException {
-    // Find the note file that contains this ID
-    try (DirectoryStream<Path> stream = Files.newDirectoryStream(notesDirectory, "*.note")) {
-        for (Path noteFile : stream) {
-            String filename = noteFile.getFileName().toString();
-            // Check if filename contains the note ID
+        try (DirectoryStream<Path> stream = Files.newDirectoryStream(notesDirectory, "*.note")) {
+            for (Path noteFile : stream) {
+                String filename = noteFile.getFileName().toString();
             if (filename.contains(noteId)) {
                 return loadNoteFromFile(noteFile);
             }
@@ -241,5 +236,129 @@ public List<String> getAllTags() throws IOException {
     Collections.sort(sortedTags);
     
     return sortedTags;
+}
+
+public List<Note> searchByContent(String query) throws IOException {
+    List<Note> allNotes = listAllNotes();
+    List<Note> matchingNotes = new ArrayList<>();
+    
+    String searchQuery = query.toLowerCase().trim();
+    
+    for (Note note : allNotes) {
+        if (note.getContent() != null && 
+            note.getContent().toLowerCase().contains(searchQuery)) {
+            matchingNotes.add(note);
+        }
+    }
+    
+    return matchingNotes;
+}
+
+public List<Note> searchByTitle(String query) throws IOException {
+    List<Note> allNotes = listAllNotes();
+    List<Note> matchingNotes = new ArrayList<>();
+    
+    String searchQuery = query.toLowerCase().trim();
+    
+    for (Note note : allNotes) {
+        if (note.getTitle() != null && 
+            note.getTitle().toLowerCase().contains(searchQuery)) {
+            matchingNotes.add(note);
+        }
+    }
+    
+    return matchingNotes;
+}
+
+public List<Note> searchAll(String query) throws IOException {
+    List<Note> allNotes = listAllNotes();
+    List<Note> matchingNotes = new ArrayList<>();
+    
+    String searchQuery = query.toLowerCase().trim();
+    
+    for (Note note : allNotes) {
+        boolean matchesTitle = note.getTitle() != null && 
+                               note.getTitle().toLowerCase().contains(searchQuery);
+        boolean matchesContent = note.getContent() != null && 
+                                 note.getContent().toLowerCase().contains(searchQuery);
+        
+        if (matchesTitle || matchesContent) {
+            matchingNotes.add(note);
+        }
+    }
+    
+    return matchingNotes;
+}
+
+public List<Note> searchWithTag(String query, String tag) throws IOException {
+    List<Note> taggedNotes = listNotesByTag(tag);
+    List<Note> matchingNotes = new ArrayList<>();
+    
+    String searchQuery = query.toLowerCase().trim();
+    
+    for (Note note : taggedNotes) {
+        boolean matchesTitle = note.getTitle() != null && 
+                               note.getTitle().toLowerCase().contains(searchQuery);
+        boolean matchesContent = note.getContent() != null && 
+                                 note.getContent().toLowerCase().contains(searchQuery);
+        
+        if (matchesTitle || matchesContent) {
+            matchingNotes.add(note);
+        }
+    }
+    
+    return matchingNotes;
+}
+
+public void updateNote(String noteId, String newTitle, String newContent, List<String> tags, Integer priority) throws IOException {
+    Path noteFile = null;
+    try (DirectoryStream<Path> stream = Files.newDirectoryStream(notesDirectory, "*.note")) {
+        for (Path file : stream) {
+            String filename = file.getFileName().toString();
+            if (filename.contains(noteId)) {
+                noteFile = file;
+                break;
+            }
+        }
+    }
+    
+    if (noteFile == null) {
+        throw new IOException("Note not found with ID: " + noteId);
+    }
+
+    Note existingNote = loadNoteFromFile(noteFile);
+
+    existingNote.setTitle(newTitle);
+    existingNote.setContent(newContent);
+    existingNote.setModified(java.time.Instant.now());
+    
+    if (tags != null) {
+        existingNote.setTags(tags);
+    }
+    
+    if (priority != null) {
+        existingNote.setPriority(priority);
+    }
+
+    fileService.deleteNote(noteFile);
+
+    saveNote(existingNote);
+}
+
+public List<Note> listNotesByPriority() throws IOException {
+    List<Note> notes = listAllNotes();
+
+    notes.sort((n1, n2) -> {
+        Integer p1 = n1.getPriority();
+        Integer p2 = n2.getPriority();
+        
+        if (p1 == null && p2 == null) return 0;
+        if (p1 == null) return 1;
+        if (p2 == null) return -1;
+        
+        return p2.compareTo(p1);
+    });
+    
+    return notes;
 }
 }

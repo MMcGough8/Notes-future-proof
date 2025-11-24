@@ -1,0 +1,12 @@
+---
+created: '2025-11-24T04:23:32.469247Z'
+modified: '2025-11-24T04:23:32.478910Z'
+title: Understanding Static Members
+priority: 3
+tags:
+- java
+- static
+- keywords
+---
+
+Static members belong to class not instances. Static variables shared across all objects. Static methods can be called without objects: Math.max(). Cannot use 'this' in static context. Static blocks initialize static variables. Example: public static int count. Use for utilities and constants.

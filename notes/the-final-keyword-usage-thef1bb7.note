@@ -1,0 +1,12 @@
+---
+created: '2025-11-24T04:23:36.357324Z'
+modified: '2025-11-24T04:23:36.360247Z'
+title: The Final Keyword Usage
+priority: 3
+tags:
+- java
+- final
+- keywords
+---
+
+Final has three uses: final variables are constants (cannot reassign), final methods cannot be overridden, final classes cannot be extended. Convention: CONSTANT_NAME for final variables. Final parameters cannot be modified in method. Improves security and clarity. Example: final double PI = 3.14159.

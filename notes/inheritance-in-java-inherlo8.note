@@ -1,0 +1,12 @@
+---
+created: '2025-11-24T04:22:43.447319Z'
+modified: '2025-11-24T04:22:43.450955Z'
+title: Inheritance in Java
+priority: 4
+tags:
+- java
+- inheritance
+- oop
+---
+
+Inheritance allows class to inherit fields and methods from parent with 'extends' keyword. Java supports single inheritance only (one parent). Child class called subclass, parent called superclass. Use 'super' to access parent members. Overriding methods changes parent behavior. Example: class Cat extends Animal. Promotes code reuse.

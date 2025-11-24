@@ -1,0 +1,12 @@
+---
+created: '2025-11-24T04:25:26.282289Z'
+modified: '2025-11-24T04:25:26.285558Z'
+title: Java Comments Guide
+priority: 1
+tags:
+- java
+- comments
+- documentation
+---
+
+Three comment types: single-line //, multi-line /* */, JavaDoc /** */. Single-line for brief notes. Multi-line for blocks. JavaDoc for API documentation. Good comments explain why not what. Keep updated with code. Don't over-comment obvious code. Example: // Calculate tax not // Add two numbers

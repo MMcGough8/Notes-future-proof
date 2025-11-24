@@ -1,0 +1,12 @@
+---
+created: '2025-11-24T04:23:59.877675Z'
+modified: '2025-11-24T04:23:59.884008Z'
+title: Polymorphism Concepts
+priority: 3
+tags:
+- java
+- polymorphism
+- oop
+---
+
+Polymorphism means many forms. Method overloading (compile-time): same name different parameters. Method overriding (runtime): subclass changes parent method. Runtime polymorphism with inheritance: Animal a = new Dog(); a.makeSound(). Enables flexible code. Parent reference, child object is key pattern.

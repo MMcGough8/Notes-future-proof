@@ -1,0 +1,12 @@
+---
+created: '2025-11-24T04:22:11.370618Z'
+modified: '2025-11-24T04:22:11.376248Z'
+title: Control Flow in Java
+priority: 5
+tags:
+- java
+- control-flow
+- loops
+---
+
+Control flow manages execution order: if/else for decisions, switch for multiple conditions, for loops for known iterations, while for unknown iterations, do-while for at least one execution. Break exits loops, continue skips iteration. Enhanced for-loop: for(String s : array). Nested loops iterate within loops. Understanding flow control is essential for logic.

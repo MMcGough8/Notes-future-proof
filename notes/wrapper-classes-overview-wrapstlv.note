@@ -1,0 +1,12 @@
+---
+created: '2025-11-24T04:24:28.012104Z'
+modified: '2025-11-24T04:24:28.022419Z'
+title: Wrapper Classes Overview
+priority: 2
+tags:
+- java
+- wrappers
+- primitives
+---
+
+Wrapper classes convert primitives to objects: Integer for int, Double for double, Boolean for boolean, Character for char. Auto-boxing: automatic conversion from primitive to wrapper. Unboxing: wrapper to primitive. Example: Integer num = 5; int n = num. Needed for collections which only store objects.

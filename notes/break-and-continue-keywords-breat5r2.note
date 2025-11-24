@@ -1,0 +1,12 @@
+---
+created: '2025-11-24T04:25:13.781666Z'
+modified: '2025-11-24T04:25:13.784509Z'
+title: Break and Continue Keywords
+priority: 1
+tags:
+- java
+- control-flow
+- loops
+---
+
+Break exits loop or switch immediately. Continue skips current iteration, goes to next. Example: for loop with if(x == 5) break; exits when x is 5. if(x % 2 == 0) continue; skips even numbers. Labeled breaks exit nested loops. Use sparingly for clarity.

@@ -1,0 +1,12 @@
+---
+created: '2025-11-24T04:25:21.060601Z'
+modified: '2025-11-24T04:25:21.065630Z'
+title: Local Variable Type Inference
+priority: 1
+tags:
+- java
+- var
+- modern-java
+---
+
+Java 10+ allows 'var' for local variables: var name = "John". Compiler infers type. Only for local variables with initializers. Cannot use for fields, parameters, or return types. Example: var list = new ArrayList<String>(). Reduces verbosity. Still strongly typed.

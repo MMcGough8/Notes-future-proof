@@ -1,0 +1,12 @@
+---
+created: '2025-11-24T04:21:32.430518Z'
+modified: '2025-11-24T04:21:32.438194Z'
+title: Classes and Objects Explained
+priority: 5
+tags:
+- java
+- oop
+- classes
+---
+
+A class is a template defining state (fields) and behavior (methods). Objects are instances created with 'new' keyword. Example: class Dog { String name; void bark() {} }. Create with: Dog myDog = new Dog(). Classes can have constructors to initialize objects. Fields store object state, methods define actions. This is the foundation of Java programming.

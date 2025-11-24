@@ -1,0 +1,12 @@
+---
+created: '2025-11-24T04:24:41.470154Z'
+modified: '2025-11-24T04:24:41.474592Z'
+title: Understanding This Keyword
+priority: 2
+tags:
+- java
+- this
+- keywords
+---
+
+'this' references current object. Use to distinguish fields from parameters: this.name = name. Call another constructor: this(args). Return current object: return this. Cannot use in static context. Common in constructors and setters. Makes code clearer when names conflict.
