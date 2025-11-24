@@ -4,6 +4,9 @@ import com.zcw.notesmanager.model.Note;
 import com.zcw.notesmanager.service.NoteService;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 public class CreateCommand {
@@ -46,11 +49,34 @@ public class CreateCommand {
                 System.out.println("Warning: Note created with empty content");
             }
             
+            // Add tags
+            System.out.print("Add tags (comma-separated, or press Enter to skip): ");
+            String tagsInput = scanner.nextLine().trim();
+            List<String> tags = new ArrayList<>();
+            
+            if (!tagsInput.isEmpty()) {
+                String[] tagArray = tagsInput.split(",");
+                for (String tag : tagArray) {
+                    String cleanTag = tag.trim().toLowerCase();
+                    if (!cleanTag.isEmpty()) {
+                        tags.add(cleanTag);
+                    }
+                }
+            }
+            
             Note note = noteService.createNote(title, content);
+            
+            if (!tags.isEmpty()) {
+                note.setTags(tags);
+                noteService.updateNote(note.getId(), note.getTitle(), note.getContent(), note.getTags());
+            }
             
             System.out.println("\n✓ Note created successfully!");
             System.out.println("ID: " + note.getId());
             System.out.println("Title: " + note.getTitle());
+            if (!tags.isEmpty()) {
+                System.out.println("Tags: " + String.join(", ", tags));
+            }
             System.out.println();
             
         } catch (IOException e) {

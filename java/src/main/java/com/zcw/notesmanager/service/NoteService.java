@@ -4,6 +4,9 @@ import com.zcw.notesmanager.model.Note;
 import com.zcw.notesmanager.util.IdGenerator;
 
 import java.io.IOException;
+import java.util.Set;
+import java.util.HashSet;
+import java.util.Collections;
 import java.nio.file.*;
 import java.util.*;
 
@@ -171,5 +174,72 @@ public void updateNote(String noteId, String newTitle, String newContent) throws
     fileService.deleteNote(noteFile);
 
     saveNote(existingNote);
+}
+
+public void updateNote(String noteId, String newTitle, String newContent, List<String> tags) throws IOException {
+    Path noteFile = null;
+    try (DirectoryStream<Path> stream = Files.newDirectoryStream(notesDirectory, "*.note")) {
+        for (Path file : stream) {
+            String filename = file.getFileName().toString();
+            if (filename.contains(noteId)) {
+                noteFile = file;
+                break;
+            }
+        }
+    }
+    
+    if (noteFile == null) {
+        throw new IOException("Note not found with ID: " + noteId);
+    }
+
+    Note existingNote = loadNoteFromFile(noteFile);
+
+    existingNote.setTitle(newTitle);
+    existingNote.setContent(newContent);
+    existingNote.setModified(java.time.Instant.now());
+    
+    if (tags != null) {
+        existingNote.setTags(tags);
+    }
+
+    fileService.deleteNote(noteFile);
+
+    saveNote(existingNote);
+}
+
+public List<Note> listNotesByTag(String tag) throws IOException {
+    List<Note> allNotes = listAllNotes();
+    List<Note> filteredNotes = new ArrayList<>();
+    
+    String searchTag = tag.toLowerCase().trim();
+    
+    for (Note note : allNotes) {
+        if (note.getTags() != null) {
+            for (String noteTag : note.getTags()) {
+                if (noteTag.equalsIgnoreCase(searchTag)) {
+                    filteredNotes.add(note);
+                    break;
+                }
+            }
+        }
+    }
+    
+    return filteredNotes;
+}
+
+public List<String> getAllTags() throws IOException {
+    List<Note> allNotes = listAllNotes();
+    Set<String> uniqueTags = new HashSet<>();
+    
+    for (Note note : allNotes) {
+        if (note.getTags() != null) {
+            uniqueTags.addAll(note.getTags());
+        }
+    }
+    
+    List<String> sortedTags = new ArrayList<>(uniqueTags);
+    Collections.sort(sortedTags);
+    
+    return sortedTags;
 }
 }

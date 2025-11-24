@@ -4,6 +4,8 @@ import com.zcw.notesmanager.model.Note;
 import com.zcw.notesmanager.service.NoteService;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class EditCommand {
@@ -31,14 +33,14 @@ public class EditCommand {
             System.out.println("\n=== Editing Note ===");
             System.out.println("ID: " + note.getId());
             System.out.println();
-            
+
             System.out.println("Current title: " + note.getTitle());
             System.out.print("New title (press Enter to keep current): ");
             String newTitle = scanner.nextLine().trim();
             if (newTitle.isEmpty()) {
                 newTitle = note.getTitle();
             }
-            
+
             System.out.println("\nCurrent content:");
             System.out.println("───────────────────────────────────────");
             System.out.println(note.getContent());
@@ -71,10 +73,34 @@ public class EditCommand {
                 System.out.println("Invalid choice. Keeping current content.");
             }
             
-            noteService.updateNote(noteId, newTitle, newContent);
+            System.out.print("\nCurrent tags: ");
+            if (note.getTags() != null && !note.getTags().isEmpty()) {
+                System.out.println(String.join(", ", note.getTags()));
+            } else {
+                System.out.println("(none)");
+            }
+            System.out.print("New tags (comma-separated, or press Enter to keep current): ");
+            String tagsInput = scanner.nextLine().trim();
+            
+            List<String> newTags = note.getTags();
+            if (!tagsInput.isEmpty()) {
+                newTags = new ArrayList<>();
+                String[] tagArray = tagsInput.split(",");
+                for (String tag : tagArray) {
+                    String cleanTag = tag.trim().toLowerCase();
+                    if (!cleanTag.isEmpty()) {
+                        newTags.add(cleanTag);
+                    }
+                }
+            }
+
+            noteService.updateNote(noteId, newTitle, newContent, newTags);
             
             System.out.println("\n✓ Note updated successfully!");
             System.out.println("Title: " + newTitle);
+            if (newTags != null && !newTags.isEmpty()) {
+                System.out.println("Tags: " + String.join(", ", newTags));
+            }
             System.out.println();
             
         } catch (IOException e) {

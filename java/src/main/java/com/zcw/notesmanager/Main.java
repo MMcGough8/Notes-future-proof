@@ -1,17 +1,15 @@
 package com.zcw.notesmanager;
 
 import com.zcw.notesmanager.cli.CommandParser;
-import com.zcw.notesmanager.cli.commands.CreateCommand;
-import com.zcw.notesmanager.cli.commands.ListCommand;
-import com.zcw.notesmanager.cli.commands.ReadCommand;
-import com.zcw.notesmanager.cli.commands.DeleteCommand;
-import com.zcw.notesmanager.cli.commands.EditCommand;
+import com.zcw.notesmanager.cli.commands.*;
 import com.zcw.notesmanager.service.NoteService;
+
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Scanner;
 
 public class Main {
+
     public static void main(String[] args) {
         try {
             Path notesDir = Path.of("notes");
@@ -75,7 +73,20 @@ public class Main {
                 break;
                 
             case "list":
-                new ListCommand(noteService).execute();
+                // Check for --tag flag
+                if (remainingArgs.length >= 2 && remainingArgs[0].equals("--tag")) {
+                    String tag = remainingArgs[1];
+                    new ListCommand(noteService, tag).execute();
+                } else if (remainingArgs.length > 0 && remainingArgs[0].startsWith("--")) {
+                    System.err.println("Unknown option: " + remainingArgs[0]);
+                    System.out.println("Usage: list [--tag <tagname>]\n");
+                } else {
+                    new ListCommand(noteService).execute();
+                }
+                break;
+                
+            case "tags":
+                new TagsCommand(noteService).execute();
                 break;
                 
             case "read":
@@ -120,12 +131,14 @@ public class Main {
 
     private static void showHelp() {
         System.out.println("\nAvailable commands:");
-        System.out.println("  create            Create a new note");
-        System.out.println("  list              List all notes");
-        System.out.println("  read <id>         View a note (or 'view')");
-        System.out.println("  edit <id>         Edit a note (or 'update')");
-        System.out.println("  delete <id>       Delete a note (or 'remove')");
-        System.out.println("  help              Show this help message");
-        System.out.println("  exit              Quit the app\n");
+        System.out.println("  create              Create a new note");
+        System.out.println("  list                List all notes");
+        System.out.println("  list --tag <name>   List notes with specific tag");
+        System.out.println("  tags                Show all tags");
+        System.out.println("  read <id>           View a note (or 'view')");
+        System.out.println("  edit <id>           Edit a note (or 'update')");
+        System.out.println("  delete <id>         Delete a note (or 'remove')");
+        System.out.println("  help                Show this help message");
+        System.out.println("  exit                Quit the app\n");
     }
 }
