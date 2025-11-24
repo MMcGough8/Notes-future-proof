@@ -31,7 +31,7 @@ public class EditCommand {
             System.out.println("\n=== Editing Note ===");
             System.out.println("ID: " + note.getId());
             System.out.println();
-
+            
             System.out.println("Current title: " + note.getTitle());
             System.out.print("New title (press Enter to keep current): ");
             String newTitle = scanner.nextLine().trim();
@@ -43,27 +43,32 @@ public class EditCommand {
             System.out.println("───────────────────────────────────────");
             System.out.println(note.getContent());
             System.out.println("───────────────────────────────────────");
-            System.out.println("\nEnter new content (type 'END' on a new line when done):");
-            System.out.println("(Leave blank and type 'END' to keep current content)");
+            System.out.println("\nDo you want to:");
+            System.out.println("  1. Replace content");
+            System.out.println("  2. Append to content");
+            System.out.println("  3. Keep current content");
+            System.out.print("Choice (1/2/3): ");
             
-            StringBuilder contentBuilder = new StringBuilder();
-            boolean firstLine = true;
+            String choice = scanner.nextLine().trim();
+            String newContent = note.getContent();
             
-            while (scanner.hasNextLine()) {
-                String line = scanner.nextLine();
-                if (line.trim().equals("END")) {
-                    break;
+            if (choice.equals("1")) {
+                System.out.println("\nEnter new content (type 'END' on a new line when done):");
+                newContent = readContent();
+                
+            } else if (choice.equals("2")) {
+                System.out.println("\nEnter content to append (type 'END' on a new line when done):");
+                String additionalContent = readContent();
+                
+                if (!additionalContent.isEmpty()) {
+                    newContent = note.getContent() + "\n\n" + additionalContent;
                 }
-                if (!firstLine) {
-                    contentBuilder.append("\n");
-                }
-                contentBuilder.append(line);
-                firstLine = false;
-            }
-            
-            String newContent = contentBuilder.toString().trim();
-            if (newContent.isEmpty()) {
-                newContent = note.getContent();
+                
+            } else if (choice.equals("3")) {
+                System.out.println("Keeping current content.");
+                
+            } else {
+                System.out.println("Invalid choice. Keeping current content.");
             }
             
             noteService.updateNote(noteId, newTitle, newContent);
@@ -75,5 +80,24 @@ public class EditCommand {
         } catch (IOException e) {
             System.err.println("Error editing note: " + e.getMessage());
         }
+    }
+    
+    private String readContent() {
+        StringBuilder contentBuilder = new StringBuilder();
+        boolean firstLine = true;
+        
+        while (scanner.hasNextLine()) {
+            String line = scanner.nextLine();
+            if (line.trim().equals("END")) {
+                break;
+            }
+            if (!firstLine) {
+                contentBuilder.append("\n");
+            }
+            contentBuilder.append(line);
+            firstLine = false;
+        }
+        
+        return contentBuilder.toString().trim();
     }
 }

@@ -36,7 +36,6 @@ public class YamlService {
         }
         
         try {
-            @SuppressWarnings("unchecked")
             Map<String, Object> result = yaml.load(yamlContent);
             
             return result != null ? result : new LinkedHashMap<>();

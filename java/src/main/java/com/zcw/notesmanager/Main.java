@@ -7,13 +7,11 @@ import com.zcw.notesmanager.cli.commands.ReadCommand;
 import com.zcw.notesmanager.cli.commands.DeleteCommand;
 import com.zcw.notesmanager.cli.commands.EditCommand;
 import com.zcw.notesmanager.service.NoteService;
-
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Scanner;
 
 public class Main {
-
     public static void main(String[] args) {
         try {
             Path notesDir = Path.of("notes");
