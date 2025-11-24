@@ -54,7 +54,6 @@ public class ListCommand {
                     note.getId(), 
                     note.getTitle());
                 
-                // Show tags if present
                 if (note.getTags() != null && !note.getTags().isEmpty()) {
                     System.out.printf(" [%s]", String.join(", ", note.getTags()));
                 }
